@@ -15,7 +15,7 @@ function __async_prompt_setup_on_startup --on-event fish_prompt
         function $func -V func
             if set -q $__async_prompt_var'_'$func
                 set -l result $__async_prompt_var'_'$func
-                echo -n $$result
+                printf "%s\n" $$result
             end
         end
     end
