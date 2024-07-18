@@ -28,6 +28,8 @@ end
 not set -q async_prompt_on_variable
 and set async_prompt_on_variable fish_bind_mode
 function __async_prompt_fire --on-event fish_prompt (for var in $async_prompt_on_variable; printf '%s\n' --on-variable $var; end)
+    __async_prompt_keep_last_pipestatus
+
     for func in (__async_prompt_config_functions)
         if functions -q $func'_loading_indicator' && set -q $__async_prompt_var'_'$func
             set $__async_prompt_var'_'$func ($func'_loading_indicator' $__async_prompt_var'_'$func)
