@@ -35,7 +35,8 @@ function __async_prompt_fire --on-event fish_prompt (for var in $async_prompt_on
 
     for func in (__async_prompt_config_functions)
         if functions -q $func'_loading_indicator' && set -q $__async_prompt_var'_'$func
-            set $__async_prompt_var'_'$func ($func'_loading_indicator' $__async_prompt_var'_'$func)
+            set -l last_prompt $__async_prompt_var'_'$func
+            set $__async_prompt_var'_'$func ($func'_loading_indicator' $$last_prompt)
         end
 
         __async_prompt_config_inherit_variables | __async_prompt_spawn \
