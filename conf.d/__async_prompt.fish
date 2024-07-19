@@ -3,6 +3,9 @@ or exit 0
 
 set -g __async_prompt_var _async_prompt_$fish_pid
 
+not set -q async_prompt_repaint_delay
+and set async_prompt_repaint_delay 0.000000001
+
 # Setup after the user defined prompt functions are loaded.
 function __async_prompt_setup_on_startup --on-event fish_prompt
     functions -e (status current-function)
@@ -194,6 +197,9 @@ function __async_prompt_config_disown
 end
 
 function __async_prompt_repaint_prompt --on-signal (__async_prompt_config_internal_signal)
+    if test $async_prompt_repaint_delay -gt 0
+        sleep $async_prompt_repaint_delay
+    end
     commandline -f repaint >/dev/null 2>/dev/null
 end
 
